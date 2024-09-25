@@ -23,6 +23,11 @@ def cli():
 
         if option == 2:
             print('Listando um contato específico...')
+            conn = sqlite3.connect('contact_list')
+            cursor = conn.cursor()
+            cursor = cursor.execute('SELECT * FROM contato WHERE c_id = 1')
+            for c in cursor:
+                print(c)
 
         if option == 3:
             print('Adicionando contato')
