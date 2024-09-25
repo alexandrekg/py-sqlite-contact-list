@@ -5,12 +5,14 @@ class Contato:
     def __init__(self):
         self.conn = None
 
-    def _instance_conn(self):
+    def connect(self):
         if self.conn is None:
             self.conn = sqlite3.connect('contact_list')
 
 
 def cli():
+    contato = Contato()
+    contato.connect()
     print("Opções do programa: \n" +
           "1 - Listar contatos\n" +
           "2 - Listar um contato específico\n" +
@@ -18,8 +20,8 @@ def cli():
           "4 - Deletar um contato\n" +
           "5 - Atualizar um contato\n")
     option = 0
-    while option == 0:
-        conn = get_connection()
+    while True:
+        conn = contato.conn
         option = int(input('Qual opção deseja?'))
 
         if option == 1:
