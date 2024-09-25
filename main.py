@@ -1,6 +1,9 @@
 import sqlite3
 
 
+def get_connection():
+    return sqlite3.connect('contact_list')
+
 
 def cli():
     print("Opções do programa: \n" +
@@ -11,11 +14,11 @@ def cli():
           "5 - Atualizar um contato\n")
     option = 0
     while option == 0:
+        conn = get_connection()
         option = int(input('Qual opção deseja?'))
 
         if option == 1:
             print('Listando todos os contatos...')
-            conn = sqlite3.connect('contact_list')
             cursor = conn.cursor()
             cursor = cursor.execute('SELECT * FROM contato')
             for data in cursor:
@@ -24,7 +27,6 @@ def cli():
 
         if option == 2:
             print('Listando um contato específico...')
-            conn = sqlite3.connect('contact_list')
             cursor = conn.cursor()
             cursor = cursor.execute('SELECT * FROM contato WHERE c_id = 1')
             for c in cursor:
@@ -34,7 +36,6 @@ def cli():
         if option == 3:
             print('Adicionando contato')
             try:
-                conn = sqlite3.connect('contact_list')
                 cursor = conn.cursor()
                 cursor.execute("""
                                       INSERT INTO contato VALUES
@@ -49,7 +50,6 @@ def cli():
 
         if option == 4:
             print('Deletando um contato...')
-            conn = sqlite3.connect('contact_list')
             cursor = conn.cursor()
             cursor.execute('DELETE FROM contato WHERE c_id = 1')
             conn.commit()
@@ -57,7 +57,6 @@ def cli():
             print('Contato deletado!')
         if option == 5:
             print('Atualizando um contato...')
-            conn = sqlite3.connect('contact_list')
             cursor = conn.cursor()
             cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
             conn.commit()
