@@ -1,8 +1,13 @@
 import sqlite3
 
 
-def get_connection():
-    return sqlite3.connect('contact_list')
+class Contato:
+    def __init__(self):
+        self.conn = None
+
+    def _instance_conn(self):
+        if self.conn is None:
+            self.conn = sqlite3.connect('contact_list')
 
 
 def cli():
