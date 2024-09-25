@@ -9,11 +9,19 @@ class Contato:
         if self.conn is None:
             self.conn = sqlite3.connect('contact_list')
 
+    def get_all(self):
+        self.connect()
+        cursor = self.conn.cursor()
+        cursor = cursor.execute('SELECT * FROM contato;')
+        for data in cursor:
+            print(data)
+        self.conn.close()
 
 def cli():
     contato = Contato()
-    contato.connect()
+
     print("Opções do programa: \n" +
+          "0 - Encerrar programa\n" +
           "1 - Listar contatos\n" +
           "2 - Listar um contato específico\n" +
           "3 - Adicionar contato\n" +
@@ -25,13 +33,9 @@ def cli():
         option = int(input('Qual opção deseja?'))
 
         if option == 1:
-            print('Listando todos os contatos...')
-            cursor = conn.cursor()
-            cursor = cursor.execute('SELECT * FROM contato')
-            for data in cursor:
-                print(data)
-            conn.close()
+            contato.get_all()
 
+        contato.connect()
         if option == 2:
             print('Listando um contato específico...')
             cursor = conn.cursor()
@@ -68,6 +72,9 @@ def cli():
             cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
             conn.commit()
             print('Contato atualizado')
+        if option == 0:
+            print('Programa encerrado')
+            break
 
 if __name__ == "__main__":
     cli()
