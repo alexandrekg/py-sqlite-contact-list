@@ -55,10 +55,13 @@ def cli():
             conn.commit()
             conn.close()
             print('Contato deletado!')
-
         if option == 5:
             print('Atualizando um contato...')
-
+            conn = sqlite3.connect('contact_list')
+            cursor = conn.cursor()
+            cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
+            conn.commit()
+            print('Contato atualizado')
 
 if __name__ == "__main__":
     cli()
