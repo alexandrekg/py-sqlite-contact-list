@@ -20,6 +20,7 @@ def cli():
             cursor = cursor.execute('SELECT * FROM contato')
             for data in cursor:
                 print(data)
+            conn.close()
 
         if option == 2:
             print('Listando um contato específico...')
@@ -28,6 +29,7 @@ def cli():
             cursor = cursor.execute('SELECT * FROM contato WHERE c_id = 1')
             for c in cursor:
                 print(c)
+            conn.close()
 
         if option == 3:
             print('Adicionando contato')
@@ -47,6 +49,12 @@ def cli():
 
         if option == 4:
             print('Deletando um contato...')
+            conn = sqlite3.connect('contact_list')
+            cursor = conn.cursor()
+            cursor.execute('DELETE FROM contato WHERE c_id = 1')
+            conn.commit()
+            conn.close()
+            print('Contato deletado!')
 
         if option == 5:
             print('Atualizando um contato...')
