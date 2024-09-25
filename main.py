@@ -9,13 +9,22 @@ class Contato:
         if self.conn is None:
             self.conn = sqlite3.connect('contact_list')
 
-    def get_all(self):
+    def get(self):
         self.connect()
         cursor = self.conn.cursor()
         cursor = cursor.execute('SELECT * FROM contato;')
         for data in cursor:
             print(data)
         self.conn.close()
+
+    def get_one(self, c_id):
+        self.connect()
+        cursor = self.conn.cursor()
+        cursor = cursor.execute(f'SELECT * FROM contato WHERE id = {c_id}')
+        for data in cursor:
+            print(data)
+        self.conn.close()
+
 
 def cli():
     contato = Contato()
@@ -33,17 +42,17 @@ def cli():
         option = int(input('Qual opção deseja?'))
 
         if option == 1:
-            contato.get_all()
+            contato.get()
 
-        contato.connect()
         if option == 2:
+            contato.get_one(1)
             print('Listando um contato específico...')
             cursor = conn.cursor()
             cursor = cursor.execute('SELECT * FROM contato WHERE c_id = 1')
             for c in cursor:
                 print(c)
             conn.close()
-
+        contato.connect()
         if option == 3:
             print('Adicionando contato')
             try:
