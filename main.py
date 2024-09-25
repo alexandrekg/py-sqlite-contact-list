@@ -15,6 +15,11 @@ def cli():
 
         if option == 1:
             print('Listando todos os contatos...')
+            conn = sqlite3.connect('contact_list')
+            cursor = conn.cursor()
+            cursor = cursor.execute('SELECT * FROM contato')
+            for data in cursor:
+                print(data)
 
         if option == 2:
             print('Listando um contato específico...')
