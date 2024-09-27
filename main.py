@@ -46,13 +46,7 @@ def cli():
 
         if option == 2:
             contato.get_one(1)
-            print('Listando um contato específico...')
-            cursor = conn.cursor()
-            cursor = cursor.execute('SELECT * FROM contato WHERE c_id = 1')
-            for c in cursor:
-                print(c)
-            conn.close()
-        contato.connect()
+
         if option == 3:
             print('Adicionando contato')
             try:
