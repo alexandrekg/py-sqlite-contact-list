@@ -44,6 +44,12 @@ class Contato:
         self.conn.commit()
         self.conn.close()
 
+    def update(self):
+        cursor = self.conn.cursor()
+        cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
+        self.conn.commit()
+        self.conn.close()
+
 
 def cli():
     contato = Contato()
@@ -57,9 +63,7 @@ def cli():
           "5 - Atualizar um contato\n")
     option = 0
     while True:
-        conn = contato.conn
         option = int(input('Qual opção deseja?'))
-
         if option == 1:
             contato.get()
         if option == 2:
@@ -69,11 +73,7 @@ def cli():
         if option == 4:
             contato.delete()
         if option == 5:
-            print('Atualizando um contato...')
-            cursor = conn.cursor()
-            cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
-            conn.commit()
-            print('Contato atualizado')
+            contato.update()
         if option == 0:
             print('Programa encerrado')
             break
