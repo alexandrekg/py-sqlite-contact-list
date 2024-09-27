@@ -24,17 +24,18 @@ class Contato:
         for data in cursor:
             print(data)
         self.conn.close()
-
     def add(self):
         try:
+            # print('\n')
+            # name = str(input('Digite o nome do contato:   '))
+            # email = str(input('Digite o email do contato:   '))
+            # phone = str(input('Digite o telefone do contato:   '))
+            self.connect()
             cursor = self.conn.cursor()
-            cursor.execute("""
-                                  INSERT INTO contato VALUES
-                                  (1, 'Teste 1', '5199345123', 'alexandreteste1@gmail.com'),
-                                  (2, 'Teste 2', '5555532321', 'alexandreteste2@gmail.com')
-                               """)
+            cursor.execute(f"""INSERT INTO contato (name, email, phone) VALUES ('Jurega', 'jurega@gmail.com', '123123123123')""")
             self.conn.commit()
             self.conn.close()
+            print('Contato adicionado!')
         except Exception as e:
             print(f'Registro já existe  \n{e}')
 
