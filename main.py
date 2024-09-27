@@ -25,6 +25,19 @@ class Contato:
             print(data)
         self.conn.close()
 
+    def add(self):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute("""
+                                  INSERT INTO contato VALUES
+                                  (1, 'Teste 1', '5199345123', 'alexandreteste1@gmail.com'),
+                                  (2, 'Teste 2', '5555532321', 'alexandreteste2@gmail.com')
+                               """)
+            self.conn.commit()
+            self.conn.close()
+        except Exception as e:
+            print(f'Registro já existe  \n{e}')
+
 
 def cli():
     contato = Contato()
@@ -49,17 +62,7 @@ def cli():
 
         if option == 3:
             print('Adicionando contato')
-            try:
-                cursor = conn.cursor()
-                cursor.execute("""
-                                      INSERT INTO contato VALUES
-                                      (1, 'Teste 1', '5199345123', 'alexandreteste1@gmail.com'),
-                                      (2, 'Teste 2', '5555532321', 'alexandreteste2@gmail.com')
-                                   """)
-                conn.commit()
-                conn.close()
-            except Exception as e:
-                print(f'Registro já existe  \n{e}')
+
             print('Contato adicionado')
 
         if option == 4:
