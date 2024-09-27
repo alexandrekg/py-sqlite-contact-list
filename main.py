@@ -38,6 +38,12 @@ class Contato:
         except Exception as e:
             print(f'Registro já existe  \n{e}')
 
+    def delete(self):
+        cursor = self.conn.cursor()
+        cursor.execute('DELETE FROM contato WHERE c_id = 1')
+        self.conn.commit()
+        self.conn.close()
+
 
 def cli():
     contato = Contato()
@@ -61,12 +67,7 @@ def cli():
         if option == 3:
             contato.add()
         if option == 4:
-            print('Deletando um contato...')
-            cursor = conn.cursor()
-            cursor.execute('DELETE FROM contato WHERE c_id = 1')
-            conn.commit()
-            conn.close()
-            print('Contato deletado!')
+            contato.delete()
         if option == 5:
             print('Atualizando um contato...')
             cursor = conn.cursor()
