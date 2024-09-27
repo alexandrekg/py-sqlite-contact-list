@@ -25,6 +25,31 @@ class Contato:
             print(data)
         self.conn.close()
 
+    def add(self):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute("""
+                                  INSERT INTO contato VALUES
+                                  (1, 'Teste 1', '5199345123', 'alexandreteste1@gmail.com'),
+                                  (2, 'Teste 2', '5555532321', 'alexandreteste2@gmail.com')
+                               """)
+            self.conn.commit()
+            self.conn.close()
+        except Exception as e:
+            print(f'Registro já existe  \n{e}')
+
+    def delete(self):
+        cursor = self.conn.cursor()
+        cursor.execute('DELETE FROM contato WHERE c_id = 1')
+        self.conn.commit()
+        self.conn.close()
+
+    def update(self):
+        cursor = self.conn.cursor()
+        cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
+        self.conn.commit()
+        self.conn.close()
+
 
 def cli():
     contato = Contato()
@@ -38,49 +63,17 @@ def cli():
           "5 - Atualizar um contato\n")
     option = 0
     while True:
-        conn = contato.conn
         option = int(input('Qual opção deseja?'))
-
         if option == 1:
             contato.get()
-
         if option == 2:
             contato.get_one(1)
-            print('Listando um contato específico...')
-            cursor = conn.cursor()
-            cursor = cursor.execute('SELECT * FROM contato WHERE c_id = 1')
-            for c in cursor:
-                print(c)
-            conn.close()
-        contato.connect()
         if option == 3:
-            print('Adicionando contato')
-            try:
-                cursor = conn.cursor()
-                cursor.execute("""
-                                      INSERT INTO contato VALUES
-                                      (1, 'Teste 1', '5199345123', 'alexandreteste1@gmail.com'),
-                                      (2, 'Teste 2', '5555532321', 'alexandreteste2@gmail.com')
-                                   """)
-                conn.commit()
-                conn.close()
-            except Exception as e:
-                print(f'Registro já existe  \n{e}')
-            print('Contato adicionado')
-
+            contato.add()
         if option == 4:
-            print('Deletando um contato...')
-            cursor = conn.cursor()
-            cursor.execute('DELETE FROM contato WHERE c_id = 1')
-            conn.commit()
-            conn.close()
-            print('Contato deletado!')
+            contato.delete()
         if option == 5:
-            print('Atualizando um contato...')
-            cursor = conn.cursor()
-            cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
-            conn.commit()
-            print('Contato atualizado')
+            contato.update()
         if option == 0:
             print('Programa encerrado')
             break
