@@ -56,15 +56,10 @@ def cli():
 
         if option == 1:
             contato.get()
-
         if option == 2:
             contato.get_one(1)
-
         if option == 3:
-            print('Adicionando contato')
-
-            print('Contato adicionado')
-
+            contato.add()
         if option == 4:
             print('Deletando um contato...')
             cursor = conn.cursor()
