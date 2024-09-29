@@ -26,18 +26,19 @@ class Contato:
         self.conn.close()
     def add(self):
         try:
-            # print('\n')
-            # name = str(input('Digite o nome do contato:   '))
-            # email = str(input('Digite o email do contato:   '))
-            # phone = str(input('Digite o telefone do contato:   '))
+            name = str(input('Digite o nome do contato: '))
+            email = str(input('Digite o email do contato: '))
+            phone = str(input('Digite o telefone do contato: '))
             self.connect()
             cursor = self.conn.cursor()
-            cursor.execute(f"""INSERT INTO contato (name, email, phone) VALUES ('Jurega', 'jurega@gmail.com', '123123123123')""")
+            query_insert = """INSERT INTO contato (name, email, phone) VALUES (?, ?, ?)"""
+            query_params = (name, email, phone)
+            cursor.execute(query_insert, query_params)
             self.conn.commit()
             self.conn.close()
             print('Contato adicionado!')
         except Exception as e:
-            print(f'Registro já existe  \n{e}')
+            print(f'Ocorreu um erro!  \n{e}')
 
     def delete(self):
         cursor = self.conn.cursor()
