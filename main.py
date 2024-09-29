@@ -24,6 +24,7 @@ class Contato:
         for data in cursor:
             print(data)
         self.conn.close()
+        
     def add(self):
         try:
             name = str(input('Digite o nome do contato: '))
