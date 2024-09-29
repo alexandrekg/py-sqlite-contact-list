@@ -24,7 +24,7 @@ class Contato:
         for data in cursor:
             print(data)
         self.conn.close()
-        
+
     def add(self):
         try:
             name = str(input('Digite o nome do contato: '))
@@ -55,6 +55,7 @@ class Contato:
             print(f'Erro: {e}')
 
     def update(self):
+        self.connect()
         cursor = self.conn.cursor()
         cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
         self.conn.commit()
