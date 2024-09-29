@@ -57,7 +57,17 @@ class Contato:
     def update(self):
         self.connect()
         cursor = self.conn.cursor()
-        cursor.execute('UPDATE contato SET email = "alexandrecorrigido@gmail.com" WHERE c_id = 1')
+        name = str(input('Digite o nome do contato que quer atualizar: '))
+        result_cursor = next(cursor.execute('SELECT * FROM contato WHERE name = ?', (name, )))
+        print('Dados atuais do contato:\n'
+              f'id: {result_cursor[0]}\n'
+              f'nome: {result_cursor[1]}\n'
+              f'email: {result_cursor[2]}\n'
+              f'telefone: {result_cursor[3]}\n')
+        new_name = str(input('Digite o novo nome do contato: '))
+        query = """UPDATE contato SET name = ? WHERE id = ?"""
+        params = (new_name, int(result_cursor[0]))
+        cursor.execute(query, params)
         self.conn.commit()
         self.conn.close()
 
