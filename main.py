@@ -26,24 +26,32 @@ class Contato:
         self.conn.close()
     def add(self):
         try:
-            # print('\n')
-            # name = str(input('Digite o nome do contato:   '))
-            # email = str(input('Digite o email do contato:   '))
-            # phone = str(input('Digite o telefone do contato:   '))
+            name = str(input('Digite o nome do contato: '))
+            email = str(input('Digite o email do contato: '))
+            phone = str(input('Digite o telefone do contato: '))
             self.connect()
             cursor = self.conn.cursor()
-            cursor.execute(f"""INSERT INTO contato (name, email, phone) VALUES ('Jurega', 'jurega@gmail.com', '123123123123')""")
+            query_insert = """INSERT INTO contato (name, email, phone) VALUES (?, ?, ?)"""
+            query_params = (name, email, phone)
+            cursor.execute(query_insert, query_params)
             self.conn.commit()
             self.conn.close()
             print('Contato adicionado!')
         except Exception as e:
-            print(f'Registro já existe  \n{e}')
+            print(f'Ocorreu um erro!  \n{e}')
 
     def delete(self):
-        cursor = self.conn.cursor()
-        cursor.execute('DELETE FROM contato WHERE c_id = 1')
-        self.conn.commit()
-        self.conn.close()
+        try:
+            self.connect()
+            cursor = self.conn.cursor()
+            query = """DELETE FROM contato WHERE name = ?"""
+            query_param = str(input("Digite o nome do contato que deseja deletar: "))
+            cursor.execute(query, (query_param,))
+            self.conn.commit()
+            self.conn.close()
+            print('Contato deletado!')
+        except Exception as e:
+            print(f'Erro: {e}')
 
     def update(self):
         cursor = self.conn.cursor()
@@ -67,14 +75,24 @@ def cli():
         option = int(input('Qual opção deseja?'))
         if option == 1:
             contato.get()
+            return False
+
         if option == 2:
             contato.get_one(1)
+            return False
+
         if option == 3:
             contato.add()
+            return False
+
         if option == 4:
             contato.delete()
+            return False
+
         if option == 5:
             contato.update()
+            return False
+
         if option == 0:
             print('Programa encerrado')
             break
